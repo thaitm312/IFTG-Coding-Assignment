@@ -28,7 +28,7 @@ namespace SettlementBookingSystem.Application.Bookings.Commands
             var startTime = TimeSpan.Parse(request.BookingTime);
             var endTime = startTime.Add(TimeSpan.FromHours(_options.Value.DurationInHours));
 
-            var bookingCounts = _context.Bookings.Count(x => x.Start < endTime && x.End > startTime);
+            var bookingCounts = _context.Bookings.Count(x => x.Start <= endTime && x.End >= startTime);
 
             if (bookingCounts >= _options.Value.SimultaneousSettlements)
             {

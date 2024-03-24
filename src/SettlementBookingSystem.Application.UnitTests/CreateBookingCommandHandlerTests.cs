@@ -49,7 +49,7 @@ namespace SettlementBookingSystem.Application.UnitTests
             var command = new CreateBookingCommand
             {
                 Name = "test",
-                BookingTime = "10:00",
+                BookingTime = "10:01",
             };
 
             var handler = new CreateBookingCommandHandler(_mockBookingOptions.Object, _mockContext.Object);
