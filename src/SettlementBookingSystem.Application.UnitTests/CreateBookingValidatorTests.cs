@@ -49,7 +49,7 @@ namespace SettlementBookingSystem.Application.UnitTests
         {
             var command = new CreateBookingCommand
             {
-                Name = string.Empty,
+                Name = "test",
                 BookingTime = "sfsdfsd",
             };
 
