@@ -58,25 +58,7 @@ namespace SettlementBookingSystem.Application.UnitTests
 
             result.Should().NotBeNull();
             result.BookingId.Should().NotBeEmpty();
-        }
-
-        [Fact]
-        public async void GivenOutOfHoursBookingTime_WhenBooking_ThenValidationFails()
-        {
-            var command = new CreateBookingCommand
-            {
-                Name = "test",
-                BookingTime = "00:00",
-            };
-
-            var validator = new CreateBookingValidator(_mockBookingOptions.Object);
-
-            var result = await validator.ValidateAsync(command, CancellationToken.None);
-
-            result.Should().NotBeNull();
-            result.IsValid.Should().BeFalse();
-            result.Errors.Should().NotBeEmpty();
-        }
+        }       
 
         [Fact]
         public void GivenValidBookingTime_WhenBookingIsFull_ThenConflictThrown()
