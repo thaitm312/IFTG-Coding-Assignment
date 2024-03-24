@@ -26,7 +26,7 @@ namespace SettlementBookingSystem.Application.Bookings.Commands
         public Task<BookingDto> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
             var startTime = TimeSpan.Parse(request.BookingTime);
-            var endTime = startTime.Add(TimeSpan.FromHours(_options.Value.DurationInHours));
+            var endTime = startTime.Add(TimeSpan.FromMinutes(_options.Value.DurationInMinutes));
 
             var bookingCounts = _context.Bookings.Count(x => x.Start <= endTime && x.End >= startTime);
 

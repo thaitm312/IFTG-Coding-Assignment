@@ -20,7 +20,7 @@ namespace SettlementBookingSystem.Application.UnitTests
             {
                 OpenBookingHour = 9,
                 ClosedBookingHour = 16,
-                DurationInHours = 1,
+                DurationInMinutes = 1,
                 SimultaneousSettlements = 4
             });
         }

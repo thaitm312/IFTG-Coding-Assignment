@@ -22,10 +22,10 @@ namespace SettlementBookingSystem.Application.UnitTests
 
         private static readonly IList<BookingEntity> _dummyData = new List<BookingEntity>
         {
-           new() { Name = "Name1", Start = TimeSpan.Parse("09:00"), End = TimeSpan.Parse("10:00") },
-           new() { Name = "Name2", Start = TimeSpan.Parse("09:15"), End = TimeSpan.Parse("10:15") },
-           new() { Name = "Name3", Start = TimeSpan.Parse("09:30"), End = TimeSpan.Parse("10:30") },
-           new() { Name = "Name4", Start = TimeSpan.Parse("09:45"), End = TimeSpan.Parse("10:45") },
+           new() { Name = "Name1", Start = TimeSpan.Parse("09:00"), End = TimeSpan.Parse("09:59") },
+           new() { Name = "Name2", Start = TimeSpan.Parse("09:15"), End = TimeSpan.Parse("10:14") },
+           new() { Name = "Name3", Start = TimeSpan.Parse("09:30"), End = TimeSpan.Parse("10:29") },
+           new() { Name = "Name4", Start = TimeSpan.Parse("09:45"), End = TimeSpan.Parse("10:44") },
         };
 
         public CreateBookingCommandHandlerTests()
@@ -37,7 +37,7 @@ namespace SettlementBookingSystem.Application.UnitTests
             {
                 OpenBookingHour = 9,
                 ClosedBookingHour = 16,          
-                DurationInHours = 1,
+                DurationInMinutes = 59,
                 SimultaneousSettlements = 4
             });
             _mockContext.Setup(x => x.Bookings).Returns(_dummyData);
@@ -49,7 +49,7 @@ namespace SettlementBookingSystem.Application.UnitTests
             var command = new CreateBookingCommand
             {
                 Name = "test",
-                BookingTime = "10:01",
+                BookingTime = "10:00",
             };
 
             var handler = new CreateBookingCommandHandler(_mockBookingOptions.Object, _mockContext.Object);

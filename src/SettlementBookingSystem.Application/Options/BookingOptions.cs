@@ -8,6 +8,6 @@
 
         public int SimultaneousSettlements { get; set; }
 
-        public int DurationInHours { get; set; }
+        public int DurationInMinutes { get; set; }
     }
 }
