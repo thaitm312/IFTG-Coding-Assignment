@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using IntervalTree;
+using System;
 
 namespace SettlementBookingSystem.Application.Bookings.Context
 {
     public interface IBookingContext
     {
-        public IList<BookingEntity> Bookings { get; set; }
+        public IIntervalTree<TimeSpan, string> Bookings { get; set; }
     }
 }

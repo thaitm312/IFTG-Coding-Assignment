@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.Extensions.Options;
 using SettlementBookingSystem.Application.Bookings.Context;
 using SettlementBookingSystem.Application.Bookings.Dtos;
@@ -28,26 +28,17 @@ namespace SettlementBookingSystem.Application.Bookings.Commands
             var startTime = TimeSpan.Parse(request.BookingTime);
             var endTime = startTime.Add(TimeSpan.FromMinutes(_options.Value.DurationInMinutes));
 
-            var bookingCounts = _context.Bookings.Count(x => x.Start <= endTime && x.End >= startTime);
+            var bookings = _context.Bookings.Query(startTime, endTime);
 
-            if (bookingCounts >= _options.Value.SimultaneousSettlements)
+            if (bookings.Count() >= _options.Value.SimultaneousSettlements)
             {
                 throw new ConflictException($"Booking settlements limit reached for slot {request.BookingTime}");
             }
 
-            var entity = new BookingEntity
-            {
-                Name = request.Name,
-                Start = startTime,
-                End = endTime
-            };
 
-            _context.Bookings.Add(entity);
+            _context.Bookings.Add(startTime, endTime, request.Name);
 
-            return Task.FromResult(new BookingDto
-            {
-                BookingId = entity.BookingId
-            });
+            return Task.FromResult(new BookingDto());
         }
     }
 }

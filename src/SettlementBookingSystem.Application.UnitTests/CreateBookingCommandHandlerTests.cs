@@ -1,5 +1,5 @@
 using FluentAssertions;
-using FluentValidation;
+using IntervalTree;
 using Microsoft.Extensions.Options;
 using Moq;
 using SettlementBookingSystem.Application.Bookings.Commands;
@@ -7,7 +7,6 @@ using SettlementBookingSystem.Application.Bookings.Context;
 using SettlementBookingSystem.Application.Exceptions;
 using SettlementBookingSystem.Application.Options;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,12 +19,12 @@ namespace SettlementBookingSystem.Application.UnitTests
 
         private readonly Mock<IBookingContext> _mockContext;
 
-        private static readonly IList<BookingEntity> _dummyData = new List<BookingEntity>
+        private static readonly IIntervalTree<TimeSpan, string> _dummyData = new IntervalTree<TimeSpan, string>
         {
-           new() { Name = "Name1", Start = TimeSpan.Parse("09:00"), End = TimeSpan.Parse("09:59") },
-           new() { Name = "Name2", Start = TimeSpan.Parse("09:15"), End = TimeSpan.Parse("10:14") },
-           new() { Name = "Name3", Start = TimeSpan.Parse("09:30"), End = TimeSpan.Parse("10:29") },
-           new() { Name = "Name4", Start = TimeSpan.Parse("09:45"), End = TimeSpan.Parse("10:44") },
+           { TimeSpan.Parse("09:00"), TimeSpan.Parse("09:59"), "Name1" },
+           { TimeSpan.Parse("09:15"), TimeSpan.Parse("10:14"), "Name2" },
+           { TimeSpan.Parse("09:30"), TimeSpan.Parse("10:29"), "Name3" },
+           { TimeSpan.Parse("09:45"), TimeSpan.Parse("10:44"), "Name4" },
         };
 
         public CreateBookingCommandHandlerTests()
@@ -58,7 +57,7 @@ namespace SettlementBookingSystem.Application.UnitTests
 
             result.Should().NotBeNull();
             result.BookingId.Should().NotBeEmpty();
-        }       
+        }
 
         [Fact]
         public void GivenValidBookingTime_WhenBookingIsFull_ThenConflictThrown()
